@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PatrolController;
+use App\Http\Controllers\Api\PatrolSessionController;
 use App\Http\Controllers\Api\ShiftController;
 use App\Http\Controllers\Api\ShiftSessionController;
 use Illuminate\Http\Request;
@@ -16,13 +17,14 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/patrols', [PatrolController::class, 'index']);
-    Route::post('/patrols', [PatrolController::class, 'store']);
-    Route::get('/patrols/{patrol}', [PatrolController::class, 'show']);
-    Route::delete('/patrols/{patrol}', [PatrolController::class, 'destroy']);
+    // Patrol Session
+    Route::post('/patrols/start', [PatrolSessionController::class, 'start']);
+    Route::post('/patrols/stop', [PatrolSessionController::class, 'stop']);
 
+    // Shift
     Route::get('/shifts', [ShiftController::class, 'index']);
 
+    // Shift Session
     Route::post('/shift-sessions/start', [ShiftSessionController::class, 'start']);
     Route::post('/shift-sessions/end',   [ShiftSessionController::class, 'end']);
 });

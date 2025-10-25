@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StartPatrolSessionRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'client_start_id' => 'required|uuid',
+            'shift_session_id' => 'nullable|integer|exists:shift_sessions,id',
+            'start_at' => 'nullable|datetime',
+            'start_lat' => 'required|numeric|between:-90,90',
+            'start_lon' => 'required|numeric|between:-180,180',
+        ];
+    }
+}
