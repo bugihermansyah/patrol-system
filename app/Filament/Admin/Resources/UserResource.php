@@ -21,20 +21,20 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Main';
 
-    public static function getEloquentQuery(): Builder
-    {
-        $query = parent::getEloquentQuery();
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     $query = parent::getEloquentQuery();
 
-        if (session()->has('active_location_id')) {
-            $activeLocationId = session('active_location_id');
+    //     if (session()->has('active_location_id')) {
+    //         $activeLocationId = session('active_location_id');
 
-            $query->whereHas('locations', function ($q) use ($activeLocationId) {
-                $q->where('locations.id', $activeLocationId);
-            });
-        }
+    //         $query->whereHas('locations', function ($q) use ($activeLocationId) {
+    //             $q->where('locations.id', $activeLocationId);
+    //         });
+    //     }
 
-        return $query;
-    }
+    //     return $query;
+    // }
 
     public static function form(Form $form): Form
     {
@@ -82,9 +82,9 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
