@@ -3,8 +3,10 @@
 namespace App\Filament\Admin\Resources\PatrolSessionResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -19,22 +21,24 @@ class PatrolCheckpointsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('qr_scanned')
-                    ->required()
-                    ->maxLength(255),
+                SpatieMediaLibraryFileUpload::make('photos')
+                    ->collection('patrol_checkpoint_photos')
+                    ->openable()
+                    ->multiple()
+                    ->columnSpanFull(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('qr_scanned')
+            ->recordTitleAttribute('checkpoint.name')
             ->columns([
-                TextColumn::make('qr_scanned'),
                 TextColumn::make('checkpoint.name'),
                 TextColumn::make('scanned_at')
                     ->dateTime(),
-                TextColumn::make('remarks'),
+                TextColumn::make('note')
+                    ->wrap(),
             ])
             ->filters([
                 //
@@ -43,6 +47,9 @@ class PatrolCheckpointsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver()
+                    ->modalWidth(MaxWidth::Small),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

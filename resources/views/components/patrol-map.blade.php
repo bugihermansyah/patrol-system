@@ -1,6 +1,20 @@
 <div id="patrol-map" style="height: 420px; border-radius: 10px; margin-top: 10px;"></div>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+/* ==== Fix leaflet overlap di Filament modal ==== */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 0 !important;
+}
+
+.fi-modal,
+.fi-modal-overlay {
+    z-index: 2000 !important;
+    position: relative !important;
+}
+</style>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
