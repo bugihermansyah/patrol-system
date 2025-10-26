@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PatrolCheckpointController;
 use App\Http\Controllers\Api\PatrolController;
 use App\Http\Controllers\Api\PatrolSessionController;
 use App\Http\Controllers\Api\ShiftController;
@@ -27,5 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Shift Session
     Route::post('/shift-sessions/start', [ShiftSessionController::class, 'start']);
     Route::post('/shift-sessions/end',   [ShiftSessionController::class, 'end']);
+
+    // Checkpoint
+    Route::post('/patrols/{patrol}/checkpoints', [PatrolCheckpointController::class, 'store'])
+        ->whereNumber('patrol');
 });
  
