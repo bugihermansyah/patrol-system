@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CheckpointController;
 use App\Http\Controllers\Api\PatrolCheckpointController;
 use App\Http\Controllers\Api\PatrolController;
 use App\Http\Controllers\Api\PatrolSessionController;
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/shift-sessions/end',   [ShiftSessionController::class, 'end']);
 
     // Checkpoint
+    Route::get('/checkpoints/qr/{code}', [CheckpointController::class, 'validateQr']);
     Route::post('/patrols/{patrol}/checkpoints', [PatrolCheckpointController::class, 'store'])
         ->whereNumber('patrol');
 });

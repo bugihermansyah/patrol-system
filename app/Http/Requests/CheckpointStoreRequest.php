@@ -26,7 +26,7 @@ class CheckpointStoreRequest extends FormRequest
             'patrol_id'     => 'nullable|integer|exists:patrol_sessions,id', // hanya jika tidak pakai route binding
             'checkpoint_id' => 'nullable|integer|exists:checkpoints,id',
 
-            'qr_scanned'    => 'nullable|uuid',
+            'qr_scanned'    => 'nullable|string|max:255',
             'is_valid'      => 'nullable|boolean',
             'scanned_at'    => 'nullable|date',
 
@@ -39,5 +39,15 @@ class CheckpointStoreRequest extends FormRequest
             'photos'        => 'nullable|array',
             'photos.*'      => 'file|image|max:1300', // 1,3MB per file
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($v) {
+            $isValid = filter_var($this->input('is_valid', true), FILTER_VALIDATE_BOOLEAN);
+            if ($isValid && !$this->filled('checkpoint_id')) {
+                $v->errors()->add('checkpoint_id', 'checkpoint_id wajib jika is_valid = true');
+            }
+        });
     }
 }
