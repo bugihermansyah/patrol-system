@@ -24,7 +24,7 @@ class StartPatrolSessionRequest extends FormRequest
         return [
             'client_start_id' => 'required|uuid',
             'shift_session_id' => 'nullable|integer|exists:shift_sessions,id',
-            'start_at' => 'nullable|datetime',
+            'start_at' => 'nullable|date',
             'start_lat' => 'required|numeric|between:-90,90',
             'start_lon' => 'required|numeric|between:-180,180',
         ];

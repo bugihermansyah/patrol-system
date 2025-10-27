@@ -23,7 +23,7 @@ class StopPatrolSessionRequest extends FormRequest
     {
         return [
             'client_end_id' => 'required|uuid',
-            'end_at' => 'nullable|datetime',
+            'end_at' => 'nullable|date',
             'end_lat' => 'nullable|numeric|between:-90,90',
             'end_lon' => 'nullable|numeric|between:-180,180',
         ];
